@@ -1,13 +1,13 @@
 package com.ntd.arithmeticcalculator.service;
 
-import com.ntd.arithmeticcalculator.model.entity.User;
+import com.ntd.arithmeticcalculator.model.entity.UserEntity;
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User saveUser(User user);
-    Optional<User> findById(Long id);
-    List<User> findAll();
-    Optional<User> update(Long id, User userDetails);
+    UserEntity saveUser(UserEntity user);
+    Optional<UserEntity> findById(Long id);
+    List<UserEntity> findAll();
+    Optional<UserEntity> update(Long id, UserEntity userDetails);
     void deleteUser(Long id);
 }

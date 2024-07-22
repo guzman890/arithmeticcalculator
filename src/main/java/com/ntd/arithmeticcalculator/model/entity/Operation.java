@@ -14,9 +14,15 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "label")
+    private String label;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private OperationType type;
+
+    @Column(name = "symbol")
+    private String symbol;
 
     @Column(name = "cost")
     private Double cost;

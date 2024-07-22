@@ -5,11 +5,13 @@ import com.ntd.arithmeticcalculator.business.OperationFactory;
 import com.ntd.arithmeticcalculator.model.OperationRequest;
 import com.ntd.arithmeticcalculator.model.entity.Operation;
 import com.ntd.arithmeticcalculator.model.entity.Record;
-import com.ntd.arithmeticcalculator.model.entity.User;
+import com.ntd.arithmeticcalculator.model.entity.UserEntity;
 import com.ntd.arithmeticcalculator.service.OperationService;
 import com.ntd.arithmeticcalculator.service.RecordService;
 import com.ntd.arithmeticcalculator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +36,12 @@ public class RecordController {
         return ResponseEntity.ok(recordService.findAll());
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<Page<Record>> getRecords(Pageable pageable) {
+        Page<Record> page = recordService.getRecords(pageable);
+        return ResponseEntity.ok(page);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Record> getRecordById(@PathVariable Long id) {
         return recordService.findById(id)
@@ -46,7 +54,7 @@ public class RecordController {
         Long operationId = operationRequest.getOperationId();
         Long userId = operationRequest.getUserId();
 
-        User user = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        UserEntity user = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         Operation operation= operationService.findById(operationId).orElseThrow(() -> new IllegalArgumentException("Operation not found"));
 
         OperationExecutor operationExecutor = OperationFactory.getOperation(operation.getType());

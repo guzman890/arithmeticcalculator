@@ -4,6 +4,8 @@ import com.ntd.arithmeticcalculator.model.entity.Record;
 import com.ntd.arithmeticcalculator.repository.RecordRepository;
 import com.ntd.arithmeticcalculator.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +33,10 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public List<Record> findAll() {
         return recordRepository.findAll();
+    }
+
+    public Page<Record> getRecords(Pageable pageable) {
+        return recordRepository.findAll(pageable);
     }
 
     @Override

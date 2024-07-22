@@ -16,6 +16,8 @@ public class OperationFactory {
                 return new DivisionOperation();
             case SQUARE_ROOT:
                 return new SquareRootOperation();
+            case RANDOM_STRING:
+                return new RandomStringOperation();
             default:
                 throw new IllegalArgumentException("Operation not supported.");
         }
