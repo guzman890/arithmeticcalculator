@@ -1,7 +1,10 @@
 package com.ntd.arithmeticcalculator.controller;
 
 import com.ntd.arithmeticcalculator.config.JwtUtil;
-import com.ntd.arithmeticcalculator.model.dto.LoginDto;
+import com.ntd.arithmeticcalculator.model.dto.UserDto;
+import com.ntd.arithmeticcalculator.model.request.LoginRequest;
+import com.ntd.arithmeticcalculator.model.entity.UserEntity;
+import com.ntd.arithmeticcalculator.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +17,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class AuthControllerTest {
+
+    @Mock
+    private UserService userService;
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -37,18 +45,23 @@ public class AuthControllerTest {
     @DisplayName("Test para el login exitoso")
     public void testLoginSuccess() {
         // Preparar datos de entrada
-        LoginDto loginDto = new LoginDto();
-        loginDto.setUsername("user");
-        loginDto.setPassword("password");
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("user");
+        loginRequest.setPassword("password");
 
         // Configurar comportamiento de los mocks
         Authentication authentication = mock(Authentication.class);
         when(authentication.isAuthenticated()).thenReturn(true);
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
         when(jwtUtil.create(anyString())).thenReturn("token");
-
+        UserEntity user= new UserEntity();
+        user.setUsername("user") ;
+        user.setCredits(200D);
+        user.setPassword("asdasdsadasddsfgfwe");
+        user.setId(1L);
+        when(userService.findByUsername(anyString())).thenReturn(Optional.of(user));
         // Llamar al método bajo prueba
-        ResponseEntity<Void> response = authController.login(loginDto);
+        ResponseEntity<UserDto> response = authController.login(loginRequest);
 
         // Verificar el resultado
         assertEquals(200, response.getStatusCodeValue());

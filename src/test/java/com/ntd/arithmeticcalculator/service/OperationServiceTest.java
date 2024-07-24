@@ -1,7 +1,7 @@
 package com.ntd.arithmeticcalculator.service;
 
 import com.ntd.arithmeticcalculator.model.OperationType;
-import com.ntd.arithmeticcalculator.model.entity.Operation;
+import com.ntd.arithmeticcalculator.model.entity.OperationEntity;
 import com.ntd.arithmeticcalculator.repository.OperationRepository;
 import com.ntd.arithmeticcalculator.service.impl.OperationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,59 +34,59 @@ public class OperationServiceTest {
     @Test
     @DisplayName("Guardar una operación")
     public void testSaveOperation() {
-        Operation operation = new Operation();
-        when(operationRepository.save(any(Operation.class))).thenReturn(operation);
+        OperationEntity operationEntity = new OperationEntity();
+        when(operationRepository.save(any(OperationEntity.class))).thenReturn(operationEntity);
 
-        Operation result = operationService.saveOperation(new Operation());
+        OperationEntity result = operationService.saveOperation(new OperationEntity());
 
-        assertEquals(operation, result);
-        verify(operationRepository).save(any(Operation.class));
+        assertEquals(operationEntity, result);
+        verify(operationRepository).save(any(OperationEntity.class));
     }
 
     @Test
     @DisplayName("Buscar una operación por ID")
     public void testFindById() {
-        Operation operation = new Operation();
-        when(operationRepository.findById(1L)).thenReturn(Optional.of(operation));
+        OperationEntity operationEntity = new OperationEntity();
+        when(operationRepository.findById(1L)).thenReturn(Optional.of(operationEntity));
 
-        Optional<Operation> result = operationService.findById(1L);
+        Optional<OperationEntity> result = operationService.findById(1L);
 
-        assertEquals(Optional.of(operation), result);
+        assertEquals(Optional.of(operationEntity), result);
         verify(operationRepository).findById(1L);
     }
 
     @Test
     @DisplayName("Listar todas las operaciones")
     public void testFindAll() {
-        List<Operation> operations = Arrays.asList(new Operation(), new Operation());
-        when(operationRepository.findAll()).thenReturn(operations);
+        List<OperationEntity> operationEntities = Arrays.asList(new OperationEntity(), new OperationEntity());
+        when(operationRepository.findAll()).thenReturn(operationEntities);
 
-        List<Operation> result = operationService.findAll();
+        List<OperationEntity> result = operationService.findAll();
 
-        assertEquals(operations, result);
+        assertEquals(operationEntities, result);
         verify(operationRepository).findAll();
     }
 
     @Test
     @DisplayName("Actualizar una operación")
     public void testUpdate() {
-        Operation existingOperation = new Operation();
-        existingOperation.setId(1L);
-        existingOperation.setType(OperationType.ADDITION);
-        existingOperation.setCost(10D);
+        OperationEntity existingOperationEntity = new OperationEntity();
+        existingOperationEntity.setId(1L);
+        existingOperationEntity.setType(OperationType.ADDITION);
+        existingOperationEntity.setCost(10D);
 
-        Operation updatedDetails = new Operation();
+        OperationEntity updatedDetails = new OperationEntity();
         updatedDetails.setType(OperationType.ADDITION);
         updatedDetails.setCost(20D);
 
-        when(operationRepository.findById(1L)).thenReturn(Optional.of(existingOperation));
-        when(operationRepository.save(any(Operation.class))).thenReturn(updatedDetails);
+        when(operationRepository.findById(1L)).thenReturn(Optional.of(existingOperationEntity));
+        when(operationRepository.save(any(OperationEntity.class))).thenReturn(updatedDetails);
 
-        Optional<Operation> result = operationService.update(1L, updatedDetails);
+        Optional<OperationEntity> result = operationService.update(1L, updatedDetails);
 
         assertEquals(Optional.of(updatedDetails), result);
         verify(operationRepository).findById(1L);
-        verify(operationRepository).save(any(Operation.class));
+        verify(operationRepository).save(any(OperationEntity.class));
     }
 
     @Test

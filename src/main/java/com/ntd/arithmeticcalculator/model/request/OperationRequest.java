@@ -1,4 +1,4 @@
-package com.ntd.arithmeticcalculator.model;
+package com.ntd.arithmeticcalculator.model.request;
 
 import lombok.Data;
 import java.util.List;

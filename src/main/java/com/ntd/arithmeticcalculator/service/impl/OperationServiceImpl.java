@@ -1,6 +1,6 @@
 package com.ntd.arithmeticcalculator.service.impl;
 
-import com.ntd.arithmeticcalculator.model.entity.Operation;
+import com.ntd.arithmeticcalculator.model.entity.OperationEntity;
 import com.ntd.arithmeticcalculator.repository.OperationRepository;
 import com.ntd.arithmeticcalculator.service.OperationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,27 +20,27 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public Operation saveOperation(Operation operation) {
-        return operationRepository.save(operation);
+    public OperationEntity saveOperation(OperationEntity operationEntity) {
+        return operationRepository.save(operationEntity);
     }
 
     @Override
-    public Optional<Operation> findById(Long id) {
+    public Optional<OperationEntity> findById(Long id) {
         return operationRepository.findById(id);
     }
 
     @Override
-    public List<Operation> findAll() {
+    public List<OperationEntity> findAll() {
         return operationRepository.findAll();
     }
 
     @Override
-    public Optional<Operation> update(Long id, Operation operationDetails) {
+    public Optional<OperationEntity> update(Long id, OperationEntity operationEntityDetails) {
         return operationRepository.findById(id)
                 .map(operation -> {
-                    operation.setCost(operationDetails.getCost());
-                    operation.setRecords(operationDetails.getRecords());
-                    operation.setType(operationDetails.getType());
+                    operation.setCost(operationEntityDetails.getCost());
+                    operation.setRecordEntities(operationEntityDetails.getRecordEntities());
+                    operation.setType(operationEntityDetails.getType());
                     return operationRepository.save(operation);
                 });
     }

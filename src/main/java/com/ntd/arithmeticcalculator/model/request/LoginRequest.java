@@ -1,9 +1,9 @@
-package com.ntd.arithmeticcalculator.model.dto;
+package com.ntd.arithmeticcalculator.model.request;
 
 import lombok.Data;
 
 @Data
-public class LoginDto {
+public class LoginRequest {
     private String username;
     private String password;
 }

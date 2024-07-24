@@ -1,6 +1,6 @@
 package com.ntd.arithmeticcalculator.service.impl;
 
-import com.ntd.arithmeticcalculator.model.entity.Record;
+import com.ntd.arithmeticcalculator.model.entity.RecordEntity;
 import com.ntd.arithmeticcalculator.repository.RecordRepository;
 import com.ntd.arithmeticcalculator.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,32 +21,32 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Record saveRecord(Record record) {
-        return recordRepository.save(record);
+    public RecordEntity saveRecord(RecordEntity recordEntity) {
+        return recordRepository.save(recordEntity);
     }
 
     @Override
-    public Optional<Record> findById(Long id) {
+    public Optional<RecordEntity> findById(Long id) {
         return recordRepository.findById(id);
     }
 
     @Override
-    public List<Record> findAll() {
+    public List<RecordEntity> findAll() {
         return recordRepository.findAll();
     }
 
-    public Page<Record> getRecords(Pageable pageable) {
+    public Page<RecordEntity> getRecords(Pageable pageable) {
         return recordRepository.findAll(pageable);
     }
 
     @Override
-    public Optional<Record> update(Long id, Record recordDetails) {
+    public Optional<RecordEntity> update(Long id, RecordEntity recordEntityDetails) {
         return recordRepository.findById(id)
                 .map(record -> {
-                    record.setAmount(recordDetails.getAmount());
-                    record.setUserBalance(recordDetails.getUserBalance());
-                    record.setOperationResponse(recordDetails.getOperationResponse());
-                    record.setDate(recordDetails.getDate());
+                    record.setAmount(recordEntityDetails.getAmount());
+                    record.setUserBalance(recordEntityDetails.getUserBalance());
+                    record.setOperationResponse(recordEntityDetails.getOperationResponse());
+                    record.setDate(recordEntityDetails.getDate());
                     return recordRepository.save(record);
                 });
     }

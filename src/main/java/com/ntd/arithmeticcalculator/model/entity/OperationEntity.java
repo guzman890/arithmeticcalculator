@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "operations")
-public class Operation {
+public class OperationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,6 @@ public class Operation {
     private Double cost;
 
     @OneToMany(mappedBy = "operation")
-    private Set<Record> records;
+    private Set<RecordEntity> recordEntities;
 
 }

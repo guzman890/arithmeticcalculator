@@ -7,7 +7,7 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class MultiplicationOperationTest {
+public class MultiplicationOperationEntityTest {
 
     private MultiplicationOperation multiplicationOperation;
 

@@ -1,5 +1,6 @@
 package com.ntd.arithmeticcalculator.controller;
 
+import com.ntd.arithmeticcalculator.model.dto.UserDto;
 import com.ntd.arithmeticcalculator.model.entity.UserEntity;
 import com.ntd.arithmeticcalculator.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,10 +45,10 @@ public class UserControllerTest {
         when(userService.findAll()).thenReturn(expectedUsers);
 
         // Llamar al método bajo prueba
-        ResponseEntity<List<UserEntity>> response = userController.getAllUsers();
+        ResponseEntity<List<UserDto>> response = userController.getAllUsers();
 
         // Verificar el resultado
-        assertEquals(expectedUsers, response.getBody());
+        assertEquals(expectedUsers.size(), response.getBody().size());
         assertEquals(200, response.getStatusCodeValue());
     }
 
@@ -57,10 +58,10 @@ public class UserControllerTest {
         UserEntity user = new UserEntity();
         when(userService.saveUser(any(UserEntity.class))).thenReturn(user);
 
-        ResponseEntity<UserEntity> response = userController.createUser(new UserEntity());
+        ResponseEntity<UserDto> response = userController.createUser(new UserDto());
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(user, response.getBody());
+        assertEquals(user.getId(), response.getBody().getId());
         verify(userService).saveUser(any(UserEntity.class));
     }
 
@@ -70,10 +71,10 @@ public class UserControllerTest {
         UserEntity user = new UserEntity();
         when(userService.findById(1L)).thenReturn(Optional.of(user));
 
-        ResponseEntity<UserEntity> response = userController.getUserById(1L);
+        ResponseEntity<UserDto> response = userController.getUserById(1L);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(user, response.getBody());
+        assertEquals(user.getId(), response.getBody().getId());
         verify(userService).findById(1L);
     }
 
@@ -83,10 +84,10 @@ public class UserControllerTest {
         UserEntity user = new UserEntity();
         when(userService.update(eq(1L), any(UserEntity.class))).thenReturn(Optional.of(user));
 
-        ResponseEntity<UserEntity> response = userController.updateUser(1L, new UserEntity());
+        ResponseEntity<UserDto> response = userController.updateUser(1L, new UserDto());
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(user, response.getBody());
+        assertEquals(user.getId(), response.getBody().getId());
         verify(userService).update(eq(1L), any(UserEntity.class));
     }
 

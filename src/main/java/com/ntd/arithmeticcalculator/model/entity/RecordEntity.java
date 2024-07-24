@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "records")
-public class Record {
+public class RecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class Record {
 
     @ManyToOne
     @JoinColumn(name = "operation_id", nullable = false)
-    private Operation operation;
+    private OperationEntity operation;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

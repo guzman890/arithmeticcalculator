@@ -1,6 +1,6 @@
 package com.ntd.arithmeticcalculator.service;
 
-import com.ntd.arithmeticcalculator.model.entity.Record;
+import com.ntd.arithmeticcalculator.model.entity.RecordEntity;
 import com.ntd.arithmeticcalculator.repository.RecordRepository;
 import com.ntd.arithmeticcalculator.service.impl.RecordServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,36 +36,36 @@ public class RecordServiceTest {
     @Test
     @DisplayName("Guardar un registro")
     public void testSaveRecord() {
-        Record record = new Record();
-        when(recordRepository.save(any(Record.class))).thenReturn(record);
+        RecordEntity recordEntity = new RecordEntity();
+        when(recordRepository.save(any(RecordEntity.class))).thenReturn(recordEntity);
 
-        Record result = recordService.saveRecord(new Record());
+        RecordEntity result = recordService.saveRecord(new RecordEntity());
 
-        assertEquals(record, result);
-        verify(recordRepository).save(any(Record.class));
+        assertEquals(recordEntity, result);
+        verify(recordRepository).save(any(RecordEntity.class));
     }
 
     @Test
     @DisplayName("Buscar un registro por ID")
     public void testFindById() {
-        Record record = new Record();
-        when(recordRepository.findById(1L)).thenReturn(Optional.of(record));
+        RecordEntity recordEntity = new RecordEntity();
+        when(recordRepository.findById(1L)).thenReturn(Optional.of(recordEntity));
 
-        Optional<Record> result = recordService.findById(1L);
+        Optional<RecordEntity> result = recordService.findById(1L);
 
-        assertEquals(Optional.of(record), result);
+        assertEquals(Optional.of(recordEntity), result);
         verify(recordRepository).findById(1L);
     }
 
     @Test
     @DisplayName("Listar todos los registros")
     public void testFindAll() {
-        List<Record> records = Arrays.asList(new Record(), new Record());
-        when(recordRepository.findAll()).thenReturn(records);
+        List<RecordEntity> recordEntities = Arrays.asList(new RecordEntity(), new RecordEntity());
+        when(recordRepository.findAll()).thenReturn(recordEntities);
 
-        List<Record> result = recordService.findAll();
+        List<RecordEntity> result = recordService.findAll();
 
-        assertEquals(records, result);
+        assertEquals(recordEntities, result);
         verify(recordRepository).findAll();
     }
 
@@ -73,11 +73,11 @@ public class RecordServiceTest {
     @DisplayName("Obtener registros paginados")
     public void testGetRecordsPageable() {
         PageRequest pageable = PageRequest.of(0, 10);
-        List<Record> recordList = Arrays.asList(new Record(), new Record());
-        Page<Record> expectedPage = new PageImpl<>(recordList, pageable, recordList.size());
+        List<RecordEntity> recordEntityList = Arrays.asList(new RecordEntity(), new RecordEntity());
+        Page<RecordEntity> expectedPage = new PageImpl<>(recordEntityList, pageable, recordEntityList.size());
         when(recordRepository.findAll(pageable)).thenReturn(expectedPage);
 
-        Page<Record> result = recordService.getRecords(pageable);
+        Page<RecordEntity> result = recordService.getRecords(pageable);
 
         assertEquals(expectedPage, result);
         verify(recordRepository).findAll(pageable);
@@ -86,20 +86,20 @@ public class RecordServiceTest {
     @Test
     @DisplayName("Actualizar un registro")
     public void testUpdate() {
-        Record existingRecord = new Record();
-        existingRecord.setId(1L);
+        RecordEntity existingRecordEntity = new RecordEntity();
+        existingRecordEntity.setId(1L);
 
-        Record updatedDetails = new Record();
+        RecordEntity updatedDetails = new RecordEntity();
         updatedDetails.setId(1L);
 
-        when(recordRepository.findById(1L)).thenReturn(Optional.of(existingRecord));
-        when(recordRepository.save(any(Record.class))).thenReturn(updatedDetails);
+        when(recordRepository.findById(1L)).thenReturn(Optional.of(existingRecordEntity));
+        when(recordRepository.save(any(RecordEntity.class))).thenReturn(updatedDetails);
 
-        Optional<Record> result = recordService.update(1L, updatedDetails);
+        Optional<RecordEntity> result = recordService.update(1L, updatedDetails);
 
         assertEquals(Optional.of(updatedDetails), result);
         verify(recordRepository).findById(1L);
-        verify(recordRepository).save(any(Record.class));
+        verify(recordRepository).save(any(RecordEntity.class));
     }
 
     @Test

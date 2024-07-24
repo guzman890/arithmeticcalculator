@@ -7,23 +7,23 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SubtractOperationTest {
+public class SumOperationEntityTest {
 
-    private SubtractOperation subtractOperation;
+    private SumOperation sumOperation;
 
     @BeforeEach
     public void setUp() {
-        subtractOperation = new SubtractOperation();
+        sumOperation = new SumOperation();
     }
 
     @Test
     public void testExecuteSuccess() {
-        String result = subtractOperation.execute(Arrays.asList("10", "2"));
-        assertEquals("8.0", result);
+        String result = sumOperation.execute(Arrays.asList("10", "5"));
+        assertEquals("15.0", result);
     }
 
     @Test
     public void testExecuteNotEnoughValues() {
-        assertThrows(IllegalArgumentException.class, () -> subtractOperation.execute(Collections.singletonList("10")));
+        assertThrows(IllegalArgumentException.class, () -> sumOperation.execute(Collections.singletonList("10")));
     }
 }

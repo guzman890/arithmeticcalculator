@@ -1,9 +1,10 @@
 package com.ntd.arithmeticcalculator.controller;
 
-import com.ntd.arithmeticcalculator.model.OperationRequest;
+import com.ntd.arithmeticcalculator.model.dto.RecordDto;
+import com.ntd.arithmeticcalculator.model.entity.OperationEntity;
+import com.ntd.arithmeticcalculator.model.entity.RecordEntity;
+import com.ntd.arithmeticcalculator.model.request.OperationRequest;
 import com.ntd.arithmeticcalculator.model.OperationType;
-import com.ntd.arithmeticcalculator.model.entity.Operation;
-import com.ntd.arithmeticcalculator.model.entity.Record;
 import com.ntd.arithmeticcalculator.model.entity.UserEntity;
 import com.ntd.arithmeticcalculator.service.OperationService;
 import com.ntd.arithmeticcalculator.service.RecordService;
@@ -49,14 +50,18 @@ public class RecordControllerTest {
     @Test
     @DisplayName("Test para obtener todos los registros")
     public void testGetAllRecords() {
-        Record record1 = new Record();
-        Record record2 = new Record();
-        List<Record> expectedRecords = Arrays.asList(record1, record2);
-        when(recordService.findAll()).thenReturn(expectedRecords);
+        RecordEntity recordEntity1 = new RecordEntity();
+        recordEntity1.setOperation(new OperationEntity());
+        recordEntity1.setUser(new UserEntity());
+        RecordEntity recordEntity2 = new RecordEntity();
+        recordEntity2.setOperation(new OperationEntity());
+        recordEntity2.setUser(new UserEntity());
+        List<RecordEntity> expectedRecordEntities = Arrays.asList(recordEntity1, recordEntity2);
+        when(recordService.findAll()).thenReturn(expectedRecordEntities);
 
-        ResponseEntity<List<Record>> response = recordController.getAllRecords();
+        ResponseEntity<List<RecordDto>> response = recordController.getAllRecords();
 
-        assertEquals(expectedRecords, response.getBody());
+        assertEquals(expectedRecordEntities.size(), response.getBody().size());
         assertEquals(200, response.getStatusCodeValue());
     }
 
@@ -64,15 +69,19 @@ public class RecordControllerTest {
     @DisplayName("Test para obtener registros paginados")
     public void testGetRecordsPageable() {
         PageRequest pageable = PageRequest.of(0, 10);
-        Record record1 = new Record();
-        Record record2 = new Record();
-        List<Record> records = Arrays.asList(record1, record2);
-        Page<Record> expectedPage = new PageImpl<>(records, pageable, records.size());
+        RecordEntity recordEntity1 = new RecordEntity();
+        recordEntity1.setOperation(new OperationEntity());
+        recordEntity1.setUser(new UserEntity());
+        RecordEntity recordEntity2 = new RecordEntity();
+        recordEntity2.setOperation(new OperationEntity());
+        recordEntity2.setUser(new UserEntity());
+        List<RecordEntity> recordEntities = Arrays.asList(recordEntity1, recordEntity2);
+        Page<RecordEntity> expectedPage = new PageImpl<>(recordEntities, pageable, recordEntities.size());
         when(recordService.getRecords(pageable)).thenReturn(expectedPage);
 
-        ResponseEntity<Page<Record>> response = recordController.getRecords(pageable);
+        ResponseEntity<Page<RecordDto>> response = recordController.getRecords(pageable);
 
-        assertEquals(expectedPage, response.getBody());
+        assertEquals(expectedPage.getTotalElements(), response.getBody().getTotalElements());
         assertEquals(200, response.getStatusCodeValue());
     }
 
@@ -88,26 +97,26 @@ public class RecordControllerTest {
         user.setId(1L);
         user.setCredits(100D);
 
-        Operation operation = new Operation();
-        operation.setId(1L);
-        operation.setType(OperationType.ADDITION);
-        operation.setCost(10D);
+        OperationEntity operationEntity = new OperationEntity();
+        operationEntity.setId(1L);
+        operationEntity.setType(OperationType.ADDITION);
+        operationEntity.setCost(10D);
 
-        Record record = new Record();
-        record.setOperation(operation);
-        record.setUser(user);
-        record.setAmount(operation.getCost());
-        record.setOperationResponse("8");
-        record.setUserBalance(user.getCredits());
-        record.setDate(LocalDateTime.now());
+        RecordEntity recordEntity = new RecordEntity();
+        recordEntity.setOperation(operationEntity);
+        recordEntity.setUser(user);
+        recordEntity.setAmount(operationEntity.getCost());
+        recordEntity.setOperationResponse("8");
+        recordEntity.setUserBalance(user.getCredits());
+        recordEntity.setDate(LocalDateTime.now());
 
         when(userService.findById(1L)).thenReturn(Optional.of(user));
-        when(operationService.findById(1L)).thenReturn(Optional.of(operation));
-        when(recordService.saveRecord(any(Record.class))).thenReturn(record);
+        when(operationService.findById(1L)).thenReturn(Optional.of(operationEntity));
+        when(recordService.saveRecord(any(RecordEntity.class))).thenReturn(recordEntity);
 
-        ResponseEntity<Record> response = recordController.createRecord(operationRequest);
+        ResponseEntity<RecordDto> response = recordController.createRecord(operationRequest);
 
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals(record, response.getBody());
+        assertEquals(recordEntity.getId(), response.getBody().getId());
     }
 }

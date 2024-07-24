@@ -28,7 +28,7 @@ public class UserEntity {
     private Status status;
 
     @OneToMany(mappedBy = "user")
-    private Set<Record> records;
+    private Set<RecordEntity> records;
 
     // Constructors, Getters, and Setters
 }

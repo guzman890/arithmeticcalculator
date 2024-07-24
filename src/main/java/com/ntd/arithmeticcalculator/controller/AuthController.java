@@ -1,7 +1,11 @@
 package com.ntd.arithmeticcalculator.controller;
 
 import com.ntd.arithmeticcalculator.config.JwtUtil;
-import com.ntd.arithmeticcalculator.model.dto.LoginDto;
+import com.ntd.arithmeticcalculator.model.dto.UserDto;
+import com.ntd.arithmeticcalculator.model.request.LoginRequest;
+import com.ntd.arithmeticcalculator.model.entity.UserEntity;
+import com.ntd.arithmeticcalculator.service.UserService;
+import com.ntd.arithmeticcalculator.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +22,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final UserService userService;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<Void> login(@RequestBody LoginDto loginDto) {
-        UsernamePasswordAuthenticationToken login = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+    public ResponseEntity<UserDto> login(@RequestBody LoginRequest loginRequest) {
+        UsernamePasswordAuthenticationToken login = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
         Authentication authentication = this.authenticationManager.authenticate(login);
 
         System.out.println(authentication.isAuthenticated());
         System.out.println(authentication.getPrincipal());
 
-        String jwt = this.jwtUtil.create(loginDto.getUsername());
-
-        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, jwt).build();
+        String jwt = this.jwtUtil.create(loginRequest.getUsername());
+        UserEntity user = userService.findByUsername(loginRequest.getUsername()).get();
+        return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, jwt).body(UserMapper.toDto(user));
     }
 }

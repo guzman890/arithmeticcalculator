@@ -6,7 +6,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DivisionOperationTest {
+public class DivisionOperationEntityTest {
 
     private DivisionOperation divisionOperation;
 

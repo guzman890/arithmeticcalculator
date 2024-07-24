@@ -46,11 +46,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .map(user -> {
                     user.setUsername(userDetails.getUsername());
-                    user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
                     user.setStatus(userDetails.getStatus());
                     userRepository.save(user);
                     return user;
                 });
+    }
+
+    @Override
+    public Optional<UserEntity> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override

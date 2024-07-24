@@ -1,6 +1,7 @@
 package com.ntd.arithmeticcalculator.controller;
 
-import com.ntd.arithmeticcalculator.model.entity.Operation;
+import com.ntd.arithmeticcalculator.model.dto.OperationDto;
+import com.ntd.arithmeticcalculator.model.entity.OperationEntity;
 import com.ntd.arithmeticcalculator.service.OperationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class OperationControllerTest {
+public class OperationEntityControllerTest {
 
     @Mock
     private OperationService operationService;
@@ -33,50 +34,50 @@ public class OperationControllerTest {
     @Test
     @DisplayName("Test para obtener todas las operaciones")
     public void testGetAllOperations() {
-        Operation operation1 = new Operation();
-        Operation operation2 = new Operation();
-        List<Operation> expectedOperations = Arrays.asList(operation1, operation2);
-        when(operationService.findAll()).thenReturn(expectedOperations);
+        OperationEntity operationEntity1 = new OperationEntity();
+        OperationEntity operationEntity2 = new OperationEntity();
+        List<OperationEntity> expectedOperationEntities = Arrays.asList(operationEntity1, operationEntity2);
+        when(operationService.findAll()).thenReturn(expectedOperationEntities);
 
-        ResponseEntity<List<Operation>> response = operationController.getAllOperations();
+        ResponseEntity<List<OperationDto>> response = operationController.getAllOperations();
 
-        assertEquals(expectedOperations, response.getBody());
+        assertEquals(expectedOperationEntities.size(), response.getBody().size());
         assertEquals(200, response.getStatusCodeValue());
     }
 
     @Test
     @DisplayName("Test para crear una operación")
     public void testCreateOperation() {
-        Operation operation = new Operation();
-        when(operationService.saveOperation(any(Operation.class))).thenReturn(operation);
+        OperationEntity operationEntity = new OperationEntity();
+        when(operationService.saveOperation(any(OperationEntity.class))).thenReturn(operationEntity);
 
-        ResponseEntity<Operation> response = operationController.createOperation(new Operation());
+        ResponseEntity<OperationDto> response = operationController.createOperation(new OperationDto());
 
-        assertEquals(operation, response.getBody());
+        assertEquals(operationEntity.getId(), response.getBody().getId());
         assertEquals(200, response.getStatusCodeValue());
     }
 
     @Test
     @DisplayName("Test para obtener una operación por ID")
     public void testGetOperationById() {
-        Operation operation = new Operation();
-        when(operationService.findById(1L)).thenReturn(Optional.of(operation));
+        OperationEntity operationEntity = new OperationEntity();
+        when(operationService.findById(1L)).thenReturn(Optional.of(operationEntity));
 
-        ResponseEntity<Operation> response = operationController.getOperationById(1L);
+        ResponseEntity<OperationDto> response = operationController.getOperationById(1L);
 
-        assertEquals(operation, response.getBody());
+        assertEquals(operationEntity.getId(), response.getBody().getId());
         assertEquals(200, response.getStatusCodeValue());
     }
 
     @Test
     @DisplayName("Test para actualizar una operación")
     public void testUpdateOperation() {
-        Operation operation = new Operation();
-        when(operationService.update(eq(1L), any(Operation.class))).thenReturn(Optional.of(operation));
+        OperationEntity operationEntity = new OperationEntity();
+        when(operationService.update(eq(1L), any(OperationEntity.class))).thenReturn(Optional.of(operationEntity));
 
-        ResponseEntity<Operation> response = operationController.updateOperation(1L, new Operation());
+        ResponseEntity<OperationDto> response = operationController.updateOperation(1L, new OperationDto());
 
-        assertEquals(operation, response.getBody());
+        assertEquals(operationEntity.getId(), response.getBody().getId());
         assertEquals(200, response.getStatusCodeValue());
     }
 
