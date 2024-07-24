@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "84001ba4-bc5f-454e-9ff9-2bdc8c10965f",
+		"name": "Record",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1291295",
+		"_collection_link": "https://dark-crescent-14429.postman.co/workspace/My-Workspace~e97598f1-ca04-44ae-82ee-ddd12f78aa37/collection/1291295-84001ba4-bc5f-454e-9ff9-2bdc8c10965f?action=share&source=collection_link&creator=1291295"
+	},
+	"item": [
+		{
+			"name": "Get All Records",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiaXNzIjoiYXJpdGhtZXRpY2NhbGN1bGF0b3IiLCJleHAiOjE3MjI4Nzk3NDIsImlhdCI6MTcyMTU4Mzc0Mn0.sUDkq_-l624B_caAnwMaBwP8qvYj1dWZP6ts9Hv6kds",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "3.15.196.64/records",
+					"host": [
+						"3",
+						"15",
+						"196",
+						"64"
+					],
+					"path": [
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Record",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiaXNzIjoiYXJpdGhtZXRpY2NhbGN1bGF0b3IiLCJleHAiOjE3MjI4ODg0MjksImlhdCI6MTcyMTU5MjQyOX0.rFfmAlSL9tExl1gAR6ySwjNpW-YE3m169jU_rtQZXhw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"operationId\":6,\n    \"userId\":1,\n    \"value\": [\"100\", \"100\"]\n}"
+				},
+				"url": {
+					"raw": "3.15.196.64/records",
+					"host": [
+						"3",
+						"15",
+						"196",
+						"64"
+					],
+					"path": [
+						"records"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Record by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiaXNzIjoiYXJpdGhtZXRpY2NhbGN1bGF0b3IiLCJleHAiOjE3MjI4Nzk3NDIsImlhdCI6MTcyMTU4Mzc0Mn0.sUDkq_-l624B_caAnwMaBwP8qvYj1dWZP6ts9Hv6kds",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "3.15.196.64/records/1",
+					"host": [
+						"3",
+						"15",
+						"196",
+						"64"
+					],
+					"path": [
+						"records",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Record",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"operation\": {\"id\": 2},\n    \"user\": {\"id\": 2},\n    \"amount\": 150.0,\n    \"userBalance\": 550.0,\n    \"operationResponse\": \"Updated Success\",\n    \"date\": \"2023-01-02T12:00:00\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/records/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"records",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Record",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/records/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"records",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by page",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiaXNzIjoiYXJpdGhtZXRpY2NhbGN1bGF0b3IiLCJleHAiOjE3MjI4Nzk3NDIsImlhdCI6MTcyMTU4Mzc0Mn0.sUDkq_-l624B_caAnwMaBwP8qvYj1dWZP6ts9Hv6kds",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "3.15.196.64/records/page?page=7&size=5&sort=date,desc",
+					"host": [
+						"3",
+						"15",
+						"196",
+						"64"
+					],
+					"path": [
+						"records",
+						"page"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "7"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "date,desc"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

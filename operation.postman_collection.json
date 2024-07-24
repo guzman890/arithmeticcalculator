@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "71aba3b9-4f76-4664-8d76-a13d9f24e37f",
+		"name": "operation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1291295",
+		"_collection_link": "https://dark-crescent-14429.postman.co/workspace/My-Workspace~e97598f1-ca04-44ae-82ee-ddd12f78aa37/collection/1291295-71aba3b9-4f76-4664-8d76-a13d9f24e37f?action=share&source=collection_link&creator=1291295"
+	},
+	"item": [
+		{
+			"name": "Get All Operations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiaXNzIjoiYXJpdGhtZXRpY2NhbGN1bGF0b3IiLCJleHAiOjE3MjI4Nzk3NDIsImlhdCI6MTcyMTU4Mzc0Mn0.sUDkq_-l624B_caAnwMaBwP8qvYj1dWZP6ts9Hv6kds",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "3.15.196.64/operations",
+					"host": [
+						"3",
+						"15",
+						"196",
+						"64"
+					],
+					"path": [
+						"operations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Operation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiaXNzIjoiYXJpdGhtZXRpY2NhbGN1bGF0b3IiLCJleHAiOjE3MjI4Nzk3NDIsImlhdCI6MTcyMTU4Mzc0Mn0.sUDkq_-l624B_caAnwMaBwP8qvYj1dWZP6ts9Hv6kds",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"RANDOM_STRING\",\n    \"cost\": 40\n}"
+				},
+				"url": {
+					"raw": "3.15.196.64/operations",
+					"host": [
+						"3",
+						"15",
+						"196",
+						"64"
+					],
+					"path": [
+						"operations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Operation by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiaXNzIjoiYXJpdGhtZXRpY2NhbGN1bGF0b3IiLCJleHAiOjE3MjI4Nzk3NDIsImlhdCI6MTcyMTU4Mzc0Mn0.sUDkq_-l624B_caAnwMaBwP8qvYj1dWZP6ts9Hv6kds",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "3.15.196.64/operations/5",
+					"host": [
+						"3",
+						"15",
+						"196",
+						"64"
+					],
+					"path": [
+						"operations",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Operation",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"SUBTRACTION\",\n    \"cost\": 15.0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8081/operations/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"operations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Operation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/operations/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"operations",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
