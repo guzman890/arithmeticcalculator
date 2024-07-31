@@ -114,7 +114,7 @@ public class RecordControllerTest {
         when(operationService.findById(1L)).thenReturn(Optional.of(operationEntity));
         when(recordService.saveRecord(any(RecordEntity.class))).thenReturn(recordEntity);
 
-        ResponseEntity<RecordDto> response = recordController.createRecord(operationRequest);
+        ResponseEntity<RecordDto> response = (ResponseEntity<RecordDto>) recordController.createRecord(operationRequest);
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(recordEntity.getId(), response.getBody().getId());

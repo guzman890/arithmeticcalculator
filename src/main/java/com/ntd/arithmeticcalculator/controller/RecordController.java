@@ -10,11 +10,11 @@ import com.ntd.arithmeticcalculator.model.entity.UserEntity;
 import com.ntd.arithmeticcalculator.service.OperationService;
 import com.ntd.arithmeticcalculator.service.RecordService;
 import com.ntd.arithmeticcalculator.service.UserService;
-import com.ntd.arithmeticcalculator.service.mapper.OperationMapper;
 import com.ntd.arithmeticcalculator.service.mapper.RecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,32 +58,36 @@ public class RecordController {
     }
 
     @PostMapping
-    public ResponseEntity<RecordDto> createRecord(@RequestBody OperationRequest operationRequest) {
-        Long operationId = operationRequest.getOperationId();
-        Long userId = operationRequest.getUserId();
+    public ResponseEntity<?> createRecord(@RequestBody OperationRequest operationRequest) {
+        try {
+            Long operationId = operationRequest.getOperationId();
+            Long userId = operationRequest.getUserId();
 
-        UserEntity user = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        OperationEntity operationEntity = operationService.findById(operationId).orElseThrow(() -> new IllegalArgumentException("Operation not found"));
+            UserEntity user = userService.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+            OperationEntity operationEntity = operationService.findById(operationId).orElseThrow(() -> new IllegalArgumentException("Operation not found"));
 
-        if(user.getCredits() < operationEntity.getCost()) {
-            throw new IllegalArgumentException("Not enough credits");
+            if (user.getCredits() < operationEntity.getCost()) {
+                throw new IllegalArgumentException("Not enough credits");
+            }
+
+            OperationExecutor operationExecutor = OperationFactory.getOperation(operationEntity.getType());
+            String result = operationExecutor.execute(operationRequest.getValue());
+
+            RecordEntity recordEntity = new RecordEntity();
+            recordEntity.setOperation(operationEntity);
+            recordEntity.setUser(user);
+            recordEntity.setAmount(operationEntity.getCost());
+            recordEntity.setOperationResponse(result);
+            recordEntity.setUserBalance(user.getCredits());
+            recordEntity.setDate(LocalDateTime.now());
+
+            user.setCredits(user.getCredits() - operationEntity.getCost());
+            userService.update(user.getId(), user);
+
+            return ResponseEntity.ok(RecordMapper.toDto(recordService.saveRecord(recordEntity)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        OperationExecutor operationExecutor = OperationFactory.getOperation(operationEntity.getType());
-        String result = operationExecutor.execute(operationRequest.getValue());
-
-        RecordEntity recordEntity = new RecordEntity();
-        recordEntity.setOperation(operationEntity);
-        recordEntity.setUser(user);
-        recordEntity.setAmount(operationEntity.getCost());
-        recordEntity.setOperationResponse(result);
-        recordEntity.setUserBalance(user.getCredits());
-        recordEntity.setDate(LocalDateTime.now());
-
-        user.setCredits(user.getCredits() - operationEntity.getCost());
-        userService.update(user.getId(), user);
-
-        return ResponseEntity.ok(RecordMapper.toDto(recordService.saveRecord(recordEntity)));
     }
 
     @PutMapping("/{id}")
